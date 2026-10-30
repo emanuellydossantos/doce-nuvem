@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido confirmado | Doce Nuvem</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="carrinho-container">
+
+        <header class="cabecalho-loja">
+            <h1>Doce Nuvem 🧁</h1>
+            <p>Um pedacinho de felicidade em cada cupcake.</p>
+        </header>
+
+        <section class="carrinho-vazio">
+            <p class="emoji-vazio">💗</p>
+
+            <h2>Pedido confirmado!</h2>
+            <p>Obrigada por escolher a Doce Nuvem!</p>
+
+            <p>
+                Número do pedido:
+                <strong>#{{ pedido_id }}</strong>
+            </p>
+
+            <h3>Resumo da compra</h3>
+
+            {% for item in itens %}
+                <p>
+                    {{ item.nome }} — {{ item.quantidade }} unidade(s)
+                    — R$ {{ "%.2f"|format(item.subtotal)|replace(".", ",") }}
+                </p>
+            {% endfor %}
+
+            <h2 class="total-carrinho">
+                Total: R$ {{ "%.2f"|format(total)|replace(".", ",") }}
+            </h2>
+
+            <p>
+                Esta é uma confirmação de demonstração,
+                sem pagamento real.
+            </p>
+
+            <a href="{{ url_for('inicio') }}" class="botao-continuar">
+                Voltar à loja
+            </a>
+        </section>
+
+        <footer class="rodape-carrinho">
+            <p>Doce Nuvem — feito com carinho 🩷</p>
+        </footer>
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu carrinho | Doce Nuvem</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="carrinho-container">
+
+        <header class="cabecalho-loja">
+            <h1>Doce Nuvem 🧁</h1>
+            <p>Seu cantinho de delícias!</p>
+            <a href="{{ url_for('inicio') }}" class="link-loja">
+                ← Voltar à loja
+            </a>
+        </header>
+
+        <h2 class="titulo-carrinho">Meu carrinho 🛍️</h2>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <p class="mensagem {{ categoria }}">{{ mensagem }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        {% if itens %}
+            <div class="lista-carrinho">
+
+                {% for item in itens %}
+                    {% set imagens = {
+                        'baunilha': 'cupcake-baunilha.png',
+                        'chocolate': 'cupcake-chocolate.png',
+                        'morango': 'cupcake-morango.png',
+                        'limao-siciliano': 'cupcake-limao-siciliano.png',
+                        'red-velvet': 'cupcake-red-velvet.png'
+                    } %}
+
+                    <section class="item-carrinho">
+
+                        <div class="imagem-item">
+                            {% if item.id in imagens %}
+                                <img
+                                    src="{{ url_for('static', filename='imagens/' ~ imagens[item.id]) }}"
+                                    alt="{{ item.nome }}">
+                            {% endif %}
+                        </div>
+
+                        <div class="detalhes-item">
+                            <h3>{{ item.nome }}</h3>
+
+                            <p class="preco-unitario">
+                                Preço unitário:
+                                R$ {{ "%.2f"|format(item.preco)|replace(".", ",") }}
+                            </p>
+
+                            <p>
+                                Quantidade: <strong>{{ item.quantidade }}</strong>
+                            </p>
+
+                            <p class="subtotal-item">
+                                Subtotal:
+                                <strong>
+                                    R$ {{ "%.2f"|format(item.subtotal)|replace(".", ",") }}
+                                </strong>
+                            </p>
+
+                            <form
+                                action="{{ url_for('remover_carrinho', produto_id=item.id) }}"
+                                method="post">
+
+                                <button type="submit" class="botao-remover">
+                                    Remover item
+                                </button>
+                            </form>
+                        </div>
+
+                    </section>
+                {% endfor %}
+
+            </div>
+   
+            <section class="resumo-carrinho">
+                <p class="texto-total">Total da compra</p>
+
+                <h2 class="total-carrinho">
+                    R$ {{ "%.2f"|format(total)|replace(".", ",") }}
+                </h2>
+
+                <form action="{{ url_for('finalizar_pedido') }}" method="post">
+                    <button type="submit" class="botao-finalizar">
+                        🛍️ Finalizar pedido
+                    </button>
+                </form>
+
+                <br>
+
+                <a href="{{ url_for('inicio') }}" class="botao-continuar">
+                    Continuar comprando
+                </a>
+            </section>
+
+        {% else %}
+
+            <section class="carrinho-vazio">
+                <p class="emoji-vazio">🧁</p>
+                <h3>Seu carrinho está esperando por você!</h3>
+                <p>Que tal escolher alguns cupcakes deliciosos?</p>
+
+                <a href="{{ url_for('inicio') }}" class="botao-continuar">
+                    Ver nossos cupcakes
+                </a>
+            </section>
+
+        {% endif %}
+
+        <footer class="rodape-carrinho">
+            <p>Doce Nuvem — feito com carinho 🩷</p>
+        </footer>
+
+    </main>
+</body>
+</html>

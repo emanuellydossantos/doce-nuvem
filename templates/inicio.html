@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doce Nuvem | Cupcakes</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="loja">
+        <header class="cabecalho-loja">
+            <h1>Doce Nuvem 🧁</h1>
+            <p>Um pedacinho de felicidade em cada cupcake.</p>
+            <nav>
+                <a href="{{ url_for('inicio') }}">Início</a>
+                <a href="{{ url_for('login') }}">Entrar</a>
+                <a href="{{ url_for('cadastro') }}">Criar conta</a>
+                <a href="{{ url_for('carrinho') }}">🛍️ Meu carrinho</a>
+                <a href="{{ url_for('meus_pedidos') }}">Meus pedidos</a>
+            </nav>
+        </header>
+
+        <section class="apresentacao">
+            <h2>Nosso cantinho doce</h2>
+            <p>
+                Cupcakes feitos com carinho para deixar
+                seu dia mais gostoso!
+            </p>
+        </section>
+
+        <section class="catalogo">
+            <article class="produto">
+                <img src="{{ url_for('static', filename='imagens/cupcake-baunilha.png') }}"
+                     alt="Cupcake de baunilha">
+                <h3>Cupcake de Baunilha</h3>
+                <p>Leve, delicado e cheio de sabor.</p>
+                <p class="preco">R$ 6,00</p>
+                <form action="{{ url_for('adicionar_carrinho', produto_id='baunilha') }}" method="post">
+                    <button type="submit">Adicionar ao carrinho</button>
+                </form>
+            </article>
+
+            <article class="produto">
+                <img src="{{ url_for('static', filename='imagens/cupcake-chocolate.png') }}"
+                     alt="Cupcake de chocolate">
+                <h3>Cupcake de Chocolate</h3>
+                <p>Massa fofinha com sabor intenso de chocolate.</p>
+                <p class="preco">R$ 6,00</p>
+                <form action="{{ url_for('adicionar_carrinho', produto_id='chocolate') }}" method="post">
+                    <button type="submit">Adicionar ao carrinho</button>
+                </form>
+            </article>
+
+            <article class="produto">
+                <img src="{{ url_for('static', filename='imagens/cupcake-morango.png') }}"
+                     alt="Cupcake de morango">
+                <h3>Cupcake de Morango</h3>
+                <p>Um doce sabor de morango para alegrar seu dia.</p>
+                <p class="preco">R$ 7,00</p>
+                <form action="{{ url_for('adicionar_carrinho', produto_id='morango') }}" method="post">
+                    <button type="submit">Adicionar ao carrinho</button>
+                </form>
+            </article>
+
+            <article class="produto">
+                <img src="{{ url_for('static', filename='imagens/cupcake-limao-siciliano.png') }}"
+                     alt="Cupcake de limão siciliano">
+                <h3>Cupcake de Limão Siciliano</h3>
+                <p>Um toque cítrico e delicado.</p>
+                <p class="preco">R$ 7,00</p>
+                <form action="{{ url_for('adicionar_carrinho', produto_id='limao-siciliano') }}" method="post">
+                    <button type="submit">Adicionar ao carrinho</button>
+                </form>
+            </article>
+
+            <article class="produto">
+                <img src="{{ url_for('static', filename='imagens/cupcake-red-velvet.png') }}"
+                     alt="Cupcake red velvet">
+                <h3>Cupcake Red Velvet</h3>
+                <p>Uma delícia marcante e especial.</p>
+                <p class="preco">R$ 8,00</p>
+                <form action="{{ url_for('adicionar_carrinho', produto_id='red-velvet') }}" method="post">
+                    <button type="submit">Adicionar ao carrinho</button>
+                </form>
+            </article>
+        </section>
+
+        <footer>
+            <p>Doce Nuvem — feito com carinho 🩷</p>
+        </footer>
+    </main>
+</body>
+</html>
+
+

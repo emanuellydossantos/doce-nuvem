@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Doce Nuvem</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="cartao">
+        <h1>Doce Nuvem</h1>
+        <p class="subtitulo">Um pedacinho de felicidade em cada cupcake.</p>
+
+        {% if conectado %}
+            <h2>Você entrou!</h2>
+            <p>Bem-vindo(a), {{ email }}.</p>
+            <p>Esta será a área inicial do site.</p>
+
+            <form action="{{ url_for('sair') }}" method="post">
+                <button type="submit">Sair da conta</button>
+            </form>
+        {% else %}
+            <h2>Entrar na sua conta</h2>
+
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+                {% for categoria, mensagem in mensagens %}
+                    <p class="mensagem {{ categoria }}">{{ mensagem }}</p>
+                {% endfor %}
+            {% endwith %}
+
+            <form action="{{ url_for('login') }}" method="post">
+                <label for="email">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="senha">Senha</label>
+                <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 20px;">
+                Ainda não tem uma conta?
+                <a href="{{ url_for('cadastro') }}">Cadastre-se</a>
+            </p>
+
+        {% endif %}
+    </main>
+</body>
+</html>
+

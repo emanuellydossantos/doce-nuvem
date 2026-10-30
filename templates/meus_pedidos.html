@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meus pedidos | Doce Nuvem</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <main class="carrinho-container">
+
+        <header class="cabecalho-loja">
+            <h1>Doce Nuvem 🧁</h1>
+            <p>Um pedacinho de felicidade em cada cupcake.</p>
+
+            <a href="{{ url_for('inicio') }}" class="link-loja">
+                ← Voltar à loja
+            </a>
+        </header>
+
+        <h2 class="titulo-carrinho">💗 Meus pedidos</h2>
+
+        {% if pedidos %}
+
+            <div class="lista-carrinho">
+
+                {% for pedido in pedidos %}
+
+                    <section class="item-carrinho">
+                        <div class="detalhes-item">
+
+                            <h3>Pedido #{{ pedido.id }}</h3>
+
+                            <p>
+                                <strong>Data:</strong>
+                                {{ pedido.criado_em }}
+                            </p>
+
+                            <h4>Produtos:</h4>
+
+                            {% for item in pedido.itens %}
+                                <p>
+                                    {{ item.nome_produto }}
+                                    — {{ item.quantidade }} unidade(s)
+                                    — R$ {{ "%.2f"|format(item.subtotal)|replace(".", ",") }}
+                                </p>
+                            {% endfor %}
+
+                            <h3 class="total-carrinho">
+                                Total: R$ {{ "%.2f"|format(pedido.total)|replace(".", ",") }}
+                            </h3>
+
+                        </div>
+                    </section>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <section class="carrinho-vazio">
+                <p class="emoji-vazio">🧁</p>
+
+                <h3>Você ainda não tem pedidos.</h3>
+
+                <p>
+                    Que tal escolher alguns cupcakes deliciosos?
+                </p>
+
+                <a href="{{ url_for('inicio') }}"
+                   class="botao-continuar">
+                    Conhecer os cupcakes
+                </a>
+            </section>
+
+        {% endif %}
+
+        <footer class="rodape-carrinho">
+            <p>Doce Nuvem — feito com carinho 🩷</p>
+        </footer>
+
+    </main>
+
+</body>
+</html>
