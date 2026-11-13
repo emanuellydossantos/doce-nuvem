@@ -1,65 +1,102 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Doce Nuvem</title>
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <main class="cartao">
-        <h1>Doce Nuvem</h1>
-        <p class="subtitulo">Um pedacinho de felicidade em cada cupcake.</p>
+
+    <main class="cartao cartao-login">
+
+        <div class="marca-login">
+            <img
+                src="{{ url_for('static', filename='imagens/icone - cupcake feliz.png') }}"
+                alt="Cupcake Doce Nuvem"
+                class="icone-login"
+            >
+
+            <h1>Doce Nuvem</h1>
+            <p class="subtitulo">
+                Um pedacinho de felicidade em cada cupcake.
+            </p>
+        </div>
 
         {% if conectado %}
-            <h2>Você entrou!</h2>
-            <p>Bem-vindo(a), {{ email }}.</p>
-            <p>Esta será a área inicial do site.</p>
 
-            <form action="{{ url_for('sair') }}" method="post">
-                <button type="submit">Sair da conta</button>
-            </form>
+            <div class="conteudo-login">
+                <h2>Você entrou! 💗</h2>
+
+                <p>Bem-vindo(a), {{ email }}.</p>
+                <p>Que bom ter você por aqui!</p>
+
+                <form action="{{ url_for('sair') }}" method="post">
+                    <button type="submit">Sair da conta</button>
+                </form>
+
+                <a href="{{ url_for('inicio') }}" class="link-voltar-login">
+                    Voltar à loja
+                </a>
+            </div>
+
         {% else %}
-            <h2>Entrar na sua conta</h2>
 
-            {% with mensagens = get_flashed_messages(with_categories=true) %}
-                {% for categoria, mensagem in mensagens %}
-                    <p class="mensagem {{ categoria }}">{{ mensagem }}</p>
-                {% endfor %}
-            {% endwith %}
+            <div class="conteudo-login">
+                <h2>Bem-vindo(a) de volta!</h2>
 
-            <form action="{{ url_for('login') }}" method="post">
-                <label for="email">E-mail</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    autocomplete="username"
-                    required
-                >
+                <p class="descricao-login">
+                    Entre na sua conta para aproveitar nossas delícias.
+                </p>
 
-                <label for="senha">Senha</label>
-                <input
-                    type="password"
-                    id="senha"
-                    name="senha"
-                    autocomplete="current-password"
-                    required
-                >
+                {% with mensagens = get_flashed_messages(with_categories=true) %}
+                    {% for categoria, mensagem in mensagens %}
+                        <p class="mensagem {{ categoria }}">{{ mensagem }}</p>
+                    {% endfor %}
+                {% endwith %}
 
-                <button type="submit">Entrar</button>
-            </form>
+                <form action="{{ url_for('login') }}" method="post">
 
-            <p style="text-align: center; margin-top: 20px;">
-                Ainda não tem uma conta?
-                <a href="{{ url_for('cadastro') }}">Cadastre-se</a>
-            </p>
+                    <label for="email">E-mail</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autocomplete="username"
+                        placeholder="Digite seu e-mail"
+                        required
+                    >
+
+                    <label for="senha">Senha</label>
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        autocomplete="current-password"
+                        placeholder="Digite sua senha"
+                        required
+                    >
+
+                    <button type="submit">Entrar na minha conta</button>
+
+                </form>
+
+                <p class="texto-cadastro">
+                    Ainda não tem uma conta?
+                    <a href="{{ url_for('cadastro') }}">Cadastre-se</a>
+                </p>
+
+                <a href="{{ url_for('inicio') }}" class="link-voltar-login">
+                    ← Voltar à loja
+                </a>
+            </div>
 
         {% endif %}
+
     </main>
+
 </body>
 </html>
-

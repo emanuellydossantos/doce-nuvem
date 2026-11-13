@@ -11,17 +11,68 @@
 </head>
 <body>
     <main class="loja">
-        <header class="cabecalho-loja">
-            <h1>Doce Nuvem 🧁</h1>
-            <p>Um pedacinho de felicidade em cada cupcake.</p>
-            <nav>
-                <a href="{{ url_for('inicio') }}">Início</a>
+
+    <header class="cabecalho-loja">
+
+        <div class="marca-loja">
+            <img
+                src="{{ url_for('static', filename='imagens/icone - cupcake feliz.png') }}"
+                alt=""
+                class="icone-marca"
+            >
+
+            <div class="texto-marca">
+                <h1>Doce Nuvem</h1>
+                <p>Um pedacinho de felicidade em cada cupcake.</p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="{{ url_for('inicio') }}">Início</a>
+
+            {% if conectado %}
+
+                <a href="{{ url_for('carrinho') }}" class="link-com-icone">
+                    <img
+                        src="{{ url_for('static', filename='imagens/icone - carrinho.png') }}"
+                        alt=""
+                        class="icone-menu"
+                    >
+                    Meu carrinho
+                </a>
+
+                <a href="{{ url_for('meus_pedidos') }}" class="link-com-icone">
+                    <img
+                        src="{{ url_for('static', filename='imagens/icone - sacola - meus pedidos.png') }}"
+                        alt=""
+                        class="icone-menu"
+                    >
+                    Meus pedidos
+                </a>
+
+                <form action="{{ url_for('sair') }}" method="post" class="form-sair">
+                    <button type="submit" class="link-sair">
+                        Sair da conta
+                    </button>
+                </form>
+
+            {% else %}
+
                 <a href="{{ url_for('login') }}">Entrar</a>
-                <a href="{{ url_for('cadastro') }}">Criar conta</a>
-                <a href="{{ url_for('carrinho') }}">🛍️ Meu carrinho</a>
-                <a href="{{ url_for('meus_pedidos') }}">Meus pedidos</a>
-            </nav>
-        </header>
+
+                <a href="{{ url_for('cadastro') }}" class="link-com-icone link-criar-conta">
+                    <img
+                        src="{{ url_for('static', filename='imagens/icone - criar conta.png') }}"
+                        alt=""
+                        class="icone-menu"
+                    >
+                    Criar conta
+                </a>
+
+            {% endif %}
+        </nav>
+
+    </header>
 
         <section class="apresentacao">
             <h2>Nosso cantinho doce</h2>
@@ -89,7 +140,7 @@
         </section>
 
         <footer>
-            <p>Doce Nuvem — feito com carinho 🩷</p>
+            <p>Doce Nuvem — feito com carinho ❤</p>
         </footer>
     </main>
 </body>

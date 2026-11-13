@@ -12,50 +12,93 @@
 </head>
 <body>
 
-    <main class="carrinho-container">
+    <main class="carrinho-container pedidos-container">
 
         <header class="cabecalho-loja">
-            <h1>Doce Nuvem 🧁</h1>
-            <p>Um pedacinho de felicidade em cada cupcake.</p>
+            <div class="marca-loja">
+                <img
+                    src="{{ url_for('static', filename='imagens/icone - cupcake feliz.png') }}"
+                    alt=""
+                    class="icone-marca"
+                >
+
+                <div class="texto-marca">
+                    <h1>Doce Nuvem</h1>
+                    <p>Um pedacinho de felicidade em cada cupcake.</p>
+                </div>
+            </div>
 
             <a href="{{ url_for('inicio') }}" class="link-loja">
                 ← Voltar à loja
             </a>
         </header>
 
-        <h2 class="titulo-carrinho">💗 Meus pedidos</h2>
+        <div class="titulo-pedidos">
+            <h2>Meus pedidos</h2>
+            <p>Acompanhe suas delícias e compras realizadas!</p>
+        </div>
 
         {% if pedidos %}
 
-            <div class="lista-carrinho">
+            <div class="lista-pedidos">
 
                 {% for pedido in pedidos %}
 
-                    <section class="item-carrinho">
-                        <div class="detalhes-item">
+                    <section class="cartao-pedido">
 
-                            <h3>Pedido #{{ pedido.id }}</h3>
+                        <div class="cabecalho-pedido">
+                            <div>
+                                <span class="identificacao-pedido">
+                                    Pedido
+                                </span>
 
-                            <p>
-                                <strong>Data:</strong>
-                                {{ pedido.criado_em }}
-                            </p>
+                                <h3>#{{ pedido.id }}</h3>
+                            </div>
 
-                            <h4>Produtos:</h4>
+                            <span class="etiqueta-pedido">
+                                <span class="ponto-pedido"></span>
+                                Registrado
+                            </span>
+                        </div>
+
+                        <div class="data-pedido">
+                            <span>Data da compra</span>
+                            <strong>{{ pedido.criado_em }}</strong>
+                        </div>
+
+                        <div class="produtos-pedido">
+
+                            <h4>Seus cupcakes</h4>
 
                             {% for item in pedido.itens %}
-                                <p>
-                                    {{ item.nome_produto }}
-                                    — {{ item.quantidade }} unidade(s)
-                                    — R$ {{ "%.2f"|format(item.subtotal)|replace(".", ",") }}
-                                </p>
+
+                                <div class="produto-pedido">
+                                    <div class="informacoes-produto-pedido">
+                                        <span class="mini-cupcake">🧁</span>
+
+                                        <div>
+                                            <strong>{{ item.nome_produto }}</strong>
+                                            <span>{{ item.quantidade }} unidade(s)</span>
+                                        </div>
+                                    </div>
+
+                                    <strong class="valor-produto-pedido">
+                                        R$ {{ "%.2f"|format(item.subtotal)|replace(".", ",") }}
+                                    </strong>
+                                </div>
+
                             {% endfor %}
 
-                            <h3 class="total-carrinho">
-                                Total: R$ {{ "%.2f"|format(pedido.total)|replace(".", ",") }}
-                            </h3>
-
                         </div>
+
+                        <div class="total-pedido">
+                            <span>Total do pedido</span>
+
+                            <strong>
+                                R$ {{ "%.2f"|format(pedido.total)|replace(".", ",") }}
+                            </strong>
+                        </div>
+
                     </section>
 
                 {% endfor %}
@@ -82,7 +125,7 @@
         {% endif %}
 
         <footer class="rodape-carrinho">
-            <p>Doce Nuvem — feito com carinho 🩷</p>
+            <p>Doce Nuvem — feito com carinho ❤</p>
         </footer>
 
     </main>

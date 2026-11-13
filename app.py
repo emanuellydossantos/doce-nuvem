@@ -3,6 +3,7 @@ import os
 import sqlite3
 from pathlib import Path
 from functools import wraps
+from datetime import datetime, timezone, timedelta
 
 from flask import (
     Flask, render_template, request,
@@ -80,13 +81,14 @@ def login_obrigatorio(funcao):
 
     return verificar_login
 
-
-
 @app.route("/", methods=["GET"])
 def inicio():
-    return render_template("inicio.html")
+    conectado = "usuario_id" in session
 
-
+    return render_template(
+        "inicio.html",
+        conectado=conectado
+    )
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -108,7 +110,7 @@ def login():
             session["usuario_id"] = usuario["id"]
             session["usuario_email"] = usuario["email"]
 
-            return redirect(url_for("painel"))
+            return redirect(url_for("inicio"))
 
         flash("E-mail ou senha inválidos.", "erro")
 
@@ -261,6 +263,31 @@ def remover_carrinho(produto_id):
 
     return redirect(url_for("carrinho"))
 
+# Alterar a quantidade de um cupcake no carrinho
+@app.route("/alterar-quantidade/<produto_id>/<acao>", methods=["POST"])
+@login_obrigatorio
+def alterar_quantidade(produto_id, acao):
+    carrinho = session.get("carrinho", {})
+
+    if produto_id not in PRODUTOS or produto_id not in carrinho:
+        return redirect(url_for("carrinho"))
+
+    if acao == "aumentar":
+        carrinho[produto_id] += 1
+
+    elif acao == "diminuir":
+        carrinho[produto_id] -= 1
+
+        if carrinho[produto_id] <= 0:
+            del carrinho[produto_id]
+
+    else:
+        return redirect(url_for("carrinho"))
+
+    session["carrinho"] = carrinho
+
+    return redirect(url_for("carrinho"))
+
 
 @app.route("/finalizar-pedido", methods=["POST"])
 @login_obrigatorio
@@ -351,10 +378,19 @@ def meus_pedidos():
                 ORDER BY id
             """, (pedido["id"],)).fetchall()
 
+            data_utc = datetime.strptime(
+                pedido["criado_em"],
+                "%Y-%m-%d %H:%M:%S"
+            ).replace(tzinfo=timezone.utc)
+
+            data_brasilia = data_utc.astimezone(
+               timezone(timedelta(hours=-3))
+            )
+
             pedidos_com_itens.append({
                 "id": pedido["id"],
                 "total": pedido["total"],
-                "criado_em": pedido["criado_em"],
+                "criado_em": data_brasilia.strftime("%d/%m/%Y às %H:%M"),
                 "itens": itens
             })
 

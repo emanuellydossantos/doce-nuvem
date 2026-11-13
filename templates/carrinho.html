@@ -58,9 +58,29 @@
                                 R$ {{ "%.2f"|format(item.preco)|replace(".", ",") }}
                             </p>
 
-                            <p>
-                                Quantidade: <strong>{{ item.quantidade }}</strong>
-                            </p>
+                            <div class="controle-quantidade">
+                                <span>Quantidade:</span>
+
+                                <form
+                                    action="{{ url_for('alterar_quantidade', produto_id=item.id, acao='aumentar') }}"
+                                    method="post">
+
+                                    <button type="submit" class="botao-quantidade">
+                                        +
+                                    </button>
+                                </form>
+
+                                <strong>{{ item.quantidade }}</strong>
+
+                                <form
+                                    action="{{ url_for('alterar_quantidade', produto_id=item.id, acao='diminuir') }}"
+                                    method="post">
+
+                                    <button type="submit" class="botao-quantidade">
+                                        -
+                                    </button>
+                                </form>
+                            </div>
 
                             <p class="subtotal-item">
                                 Subtotal:
@@ -84,8 +104,20 @@
 
             </div>
    
+    
             <section class="resumo-carrinho">
+
+                <div class="titulo-resumo">
+                    <img
+                        src="{{ url_for('static', filename='imagens/icone - dinheiro.png') }}"
+                        alt=""
+                        class="icone-dinheiro"
+                    >
+                    <h3>Resumo da compra</h3>
+                </div>
+
                 <p class="texto-total">Total da compra</p>
+
 
                 <h2 class="total-carrinho">
                     R$ {{ "%.2f"|format(total)|replace(".", ",") }}
@@ -93,7 +125,7 @@
 
                 <form action="{{ url_for('finalizar_pedido') }}" method="post">
                     <button type="submit" class="botao-finalizar">
-                        🛍️ Finalizar pedido
+                         Finalizar pedido
                     </button>
                 </form>
 
@@ -119,7 +151,7 @@
         {% endif %}
 
         <footer class="rodape-carrinho">
-            <p>Doce Nuvem — feito com carinho 🩷</p>
+            <p>Doce Nuvem — feito com carinho ❤</p>
         </footer>
 
     </main>
