@@ -54,6 +54,7 @@ Para o desenvolvimento do Doce Nuvem, foram utilizadas as seguintes tecnologias:
 - **SQLite:** banco de dados utilizado para armazenar informações dos usuários e pedidos.
 - **Visual Studio Code:** ambiente utilizado para edição e desenvolvimento do código.
 - **GitHub:** plataforma utilizada para armazenar e disponibilizar o projeto.
+- **PythonAnywhere:** plataforma utilizada para hospedar e disponibilizar a aplicação web na internet.
 
 ## 5. Funcionalidades implementadas
 
@@ -253,7 +254,7 @@ Conclui-se que os objetivos de desenvolver uma aplicação demonstrativa para a 
 https://github.com/emanuellydossantos/doce-nuvem
 
 **Link da solução em funcionamento:**  
-A ser inserido
+https://emanuellysantos.pythonanywhere.com/
 
 ## 14. Como executar o projeto localmente
 
